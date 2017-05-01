@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ArduinoConnect</string>
+    <string name="dialog_title">Select device</string>
+    <string name="refresh_title">Refresh</string>
+    <string name="settings_title">Settings</string>
+    <string name="connecting_title">Connecting</string>
+    <string name="discovering_title">Finding bluetooth device</string>
+    <string name="pairing_title">Pairing</string>
+
+    <string name="paired_list_title">Paired list</string>
+    <string name="unpaired_list_title">Unpaired list</string>
+</resources>
