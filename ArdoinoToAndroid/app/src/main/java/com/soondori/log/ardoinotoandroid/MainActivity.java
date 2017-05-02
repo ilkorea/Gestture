@@ -1,16 +1,19 @@
 package com.soondori.log.ardoinotoandroid;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +22,9 @@ import id.kido1611.arduinoconnect.ArduinoConnectCallback;
 
 public class MainActivity extends AppCompatActivity implements ArduinoConnectCallback {
     private ArduinoConnect mArduinoConnect;
-    private TextView tvOutText;
+    private TextView tvRxData;
+    private ImageView ivArrow;
+    MainActivity root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +33,50 @@ public class MainActivity extends AppCompatActivity implements ArduinoConnectCal
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        root = this;
         mArduinoConnect = new ArduinoConnect(this, getSupportFragmentManager(), this);
         mArduinoConnect.setSleepTime(500);
 
-        tvOutText = (TextView)findViewById(R.id.tvOutText);
+        ivArrow = (ImageView)findViewById(R.id.ivArrow);
+        tvRxData = (TextView)findViewById(R.id.tvRxData);
+        tvRxData.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(count >1){
+                    String str = s.toString();
+                    str = str.substring(0, str.indexOf("\r"));
+
+                    switch (str){
+                        case "Up":
+                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.up));
+                            break;
+                        case "Down":
+                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.down));
+                            break;
+                        case "Left":
+                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.left));
+                            break;
+                        case "Right":
+                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.right));
+                            break;
+                        case "Forward":
+                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.forward));
+                            break;
+                        case "Backward":
+                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.backward));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +146,8 @@ public class MainActivity extends AppCompatActivity implements ArduinoConnectCal
     @Override
     public void onSerialTextReceived(String text) {
         String str;
-        //str = tvOutText.getText().toString();
-        tvOutText.setText(text);
+        //str = tvRxData.getText().toString();
+        tvRxData.setText(text);
     }
 
     @Override
