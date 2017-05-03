@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.FragmentManager;
+//import android.support.v4.app.FragmentManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +21,7 @@ public class ArduinoConnect {
 
     private BluetoothAdapter mBLAdapter;
     private ArduinoConnectCallback mCallback;
-    private FragmentManager mFragmentManager;
+    //private FragmentManager mFragmentManager;
     private Activity mContext;
 
     private BluetoothSocket mConnectedSocket = null;
@@ -118,15 +118,15 @@ public class ArduinoConnect {
         sleepTime = milliseconds;
     }
 
-    public ArduinoConnect(Activity activity, FragmentManager fragmentManager){
+    public ArduinoConnect(Activity activity){
         this.mContext = activity;
-        this.mFragmentManager = fragmentManager;
+        //this.mFragmentManager = fragmentManager;
         this.mCallback = null;
         init();
     }
-    public ArduinoConnect(Activity activity, FragmentManager fragmentManager, ArduinoConnectCallback callback){
+    public ArduinoConnect(Activity activity, ArduinoConnectCallback callback){
         this.mContext = activity;
-        this.mFragmentManager = fragmentManager;
+        //this.mFragmentManager = fragmentManager;
         this.mCallback = callback;
         init();
     }
@@ -170,16 +170,16 @@ public class ArduinoConnect {
 
     public void showDialog(){
         if(mBLAdapter.isEnabled()) {
-            if (mDialog != null)
-                mDialog.show(mFragmentManager, "DialogConnect");
+//            if (mDialog != null)
+//                mDialog.show(mFragmentManager, "DialogConnect");
         }else{
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             mContext.startActivityForResult(enableBtIntent, 0);
         }
     }
     public void hideDialog(){
-        if(mDialog!=null)
-            mDialog.dismiss();
+//        if(mDialog!=null)
+//            mDialog.dismiss();
     }
 
     public boolean isConnected(){
@@ -219,12 +219,12 @@ public class ArduinoConnect {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==0 && resultCode==mContext.RESULT_OK){
-            if (mDialog != null)
-                mDialog.show(mFragmentManager, "ArduinoConnectDialog");
-        }else if(requestCode==0 && resultCode==mContext.RESULT_CANCELED){
-            mHandler.obtainMessage(ARDUINO_MSG_BLUETOOTH_FAILED).sendToTarget();
-        }
+//        if(requestCode==0 && resultCode==mContext.RESULT_OK){
+//            if (mDialog != null)
+//                mDialog.show(mFragmentManager, "ArduinoConnectDialog");
+//        }else if(requestCode==0 && resultCode==mContext.RESULT_CANCELED){
+//            mHandler.obtainMessage(ARDUINO_MSG_BLUETOOTH_FAILED).sendToTarget();
+//        }
     }
 
     class ManageBluetooth extends Thread{

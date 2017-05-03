@@ -1,0 +1,2 @@
+set solib-search-path ./obj/local/arm64-v8a
+directory C:/Users/Log/AppData/Local/Android/sdk/ndk-bundle/build//../platforms/android-21/arch-arm64 C:/Users/Log/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/system/include jni

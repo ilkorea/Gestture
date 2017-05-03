@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity implements ArduinoConnectCal
     private ImageView ivArrow;
     MainActivity root;
 
+    static {
+        System.loadLibrary("JNIModule");
+    }
+    public native String makeString();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +39,13 @@ public class MainActivity extends AppCompatActivity implements ArduinoConnectCal
         setSupportActionBar(toolbar);
 
         root = this;
-        mArduinoConnect = new ArduinoConnect(this, getSupportFragmentManager(), this);
+        mArduinoConnect = new ArduinoConnect(this, this);
         mArduinoConnect.setSleepTime(500);
 
         ivArrow = (ImageView)findViewById(R.id.ivArrow);
         tvRxData = (TextView)findViewById(R.id.tvRxData);
+        tvRxData.setText(makeString());
+
         tvRxData.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
