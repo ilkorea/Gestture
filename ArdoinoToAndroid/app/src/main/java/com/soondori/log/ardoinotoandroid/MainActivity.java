@@ -20,7 +20,11 @@ import android.widget.Toast;
 import id.kido1611.arduinoconnect.ArduinoConnect;
 import id.kido1611.arduinoconnect.ArduinoConnectCallback;
 
+import android.opengl.GLSurfaceView;
+
 public class MainActivity extends AppCompatActivity implements ArduinoConnectCallback {
+    private GLSurfaceView mGLView;
+
     private ArduinoConnect mArduinoConnect;
     private TextView tvRxData;
     private ImageView ivArrow;
@@ -34,7 +38,10 @@ public class MainActivity extends AppCompatActivity implements ArduinoConnectCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        mGLView = new MyGLSurfaceView(this);
+
+        setContentView(mGLView);
+        //setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -44,54 +51,54 @@ public class MainActivity extends AppCompatActivity implements ArduinoConnectCal
 
         ivArrow = (ImageView)findViewById(R.id.ivArrow);
         tvRxData = (TextView)findViewById(R.id.tvRxData);
-        tvRxData.setText(makeString());
+//        tvRxData.setText(makeString());
+//
+//        tvRxData.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                if(count >1){
+//                    String str = s.toString();
+//                    str = str.substring(0, str.indexOf("\r"));
+//
+//                    switch (str){
+//                        case "Up":
+//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.up));
+//                            break;
+//                        case "Down":
+//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.down));
+//                            break;
+//                        case "Left":
+//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.left));
+//                            break;
+//                        case "Right":
+//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.right));
+//                            break;
+//                        case "Forward":
+//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.forward));
+//                            break;
+//                        case "Backward":
+//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.backward));
+//                            break;
+//                        default:
+//                            break;
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {}
+//        });
 
-        tvRxData.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count >1){
-                    String str = s.toString();
-                    str = str.substring(0, str.indexOf("\r"));
-
-                    switch (str){
-                        case "Up":
-                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.up));
-                            break;
-                        case "Down":
-                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.down));
-                            break;
-                        case "Left":
-                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.left));
-                            break;
-                        case "Right":
-                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.right));
-                            break;
-                        case "Forward":
-                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.forward));
-                            break;
-                        case "Backward":
-                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.backward));
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mArduinoConnect.showDialog();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mArduinoConnect.showDialog();
+//            }
+//        });
     }
 
     @Override
