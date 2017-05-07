@@ -13,7 +13,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +25,7 @@ import id.kido1611.arduinoconnect.ArduinoConnectCallback;
 import android.opengl.GLSurfaceView;
 
 public class MainActivity extends AppCompatActivity implements ArduinoConnectCallback {
-    private GLSurfaceView mGLView;
+    private MyGLSurfaceView mGLView;
 
     private ArduinoConnect mArduinoConnect;
     private TextView tvRxData;
@@ -38,12 +40,22 @@ public class MainActivity extends AppCompatActivity implements ArduinoConnectCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGLView = new MyGLSurfaceView(this);
 
-        setContentView(mGLView);
-        //setContentView(R.layout.activity_main);
+
+        //setContentView(mGLView);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        LinearLayout l = (LinearLayout) findViewById(R.id.MyLinearLayout);
+        GLSurfaceView s = new GLSurfaceView(this);
+        s.setRenderer(new ParticleRenderer(this));
+
+        //to add the view with your own parameters
+        l.addView(s, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        //or simply use
+        //l.addView(s,0);
 
         root = this;
         mArduinoConnect = new ArduinoConnect(this, this);
