@@ -24,93 +24,39 @@ import id.kido1611.arduinoconnect.ArduinoConnectCallback;
 
 import android.opengl.GLSurfaceView;
 
-public class MainActivity extends AppCompatActivity implements ArduinoConnectCallback {
-    private MyGLSurfaceView mGLView;
-
+public class MainActivity extends AppCompatActivity {
     private ArduinoConnect mArduinoConnect;
-    private TextView tvRxData;
-    private ImageView ivArrow;
-    MainActivity root;
-
-    static {
-        System.loadLibrary("JNIModule");
-    }
-    public native String makeString();
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        //setContentView(mGLView);
         setContentView(R.layout.activity_main);
+
+        mArduinoConnect = new ArduinoConnect(this, getSupportFragmentManager());
+        mArduinoConnect.setSleepTime(500);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        LinearLayout l = (LinearLayout) findViewById(R.id.MyLinearLayout);
-        GLSurfaceView s = new GLSurfaceView(this);
-        s.setRenderer(new ParticleRenderer(this));
 
-        //to add the view with your own parameters
-        l.addView(s, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//        root = this;
+//        mArduinoConnect = new ArduinoConnect(this, this);
+//        mArduinoConnect.setSleepTime(500);
 
-        //or simply use
-        //l.addView(s,0);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mArduinoConnect.showDialog();
+            }
+        });
 
-        root = this;
-        mArduinoConnect = new ArduinoConnect(this, this);
-        mArduinoConnect.setSleepTime(500);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new MainFragment()).commit();
+    }
 
-        ivArrow = (ImageView)findViewById(R.id.ivArrow);
-        tvRxData = (TextView)findViewById(R.id.tvRxData);
-//        tvRxData.setText(makeString());
-//
-//        tvRxData.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if(count >1){
-//                    String str = s.toString();
-//                    str = str.substring(0, str.indexOf("\r"));
-//
-//                    switch (str){
-//                        case "Up":
-//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.up));
-//                            break;
-//                        case "Down":
-//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.down));
-//                            break;
-//                        case "Left":
-//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.left));
-//                            break;
-//                        case "Right":
-//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.right));
-//                            break;
-//                        case "Forward":
-//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.forward));
-//                            break;
-//                        case "Backward":
-//                            ivArrow.setBackground(ContextCompat.getDrawable(root, R.drawable.backward));
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {}
-//        });
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mArduinoConnect.showDialog();
-//            }
-//        });
+    public void hideFAB(int visibility){
+        fab.setVisibility(visibility);
     }
 
     @Override
@@ -169,47 +115,4 @@ public class MainActivity extends AppCompatActivity implements ArduinoConnectCal
         super.onDestroy();
     }
 
-    @Override
-    public void onSerialTextReceived(String text) {
-        String str;
-        //str = tvRxData.getText().toString();
-        tvRxData.setText(text);
-    }
-
-    @Override
-    public void onArduinoConnected(BluetoothDevice device) {
-        if(getArduinoConnect()!=null){
-            getArduinoConnect().sendMessage("Connected..");
-        }
-        Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-        //((MainActivity)getActivity()).hideFAB(View.GONE);
-    }
-
-    @Override
-    public void onArduinoDisconnected() {
-        if(getArduinoConnect()!=null){
-            Toast.makeText(this, "Disconnected", Toast.LENGTH_SHORT).show();
-            //((MainActivity)getActivity()).hideFAB(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void onArduinoNotConnected() {
-        Toast.makeText(this, "Not Connected", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onArduinoConnectFailed() {
-        Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onBluetoothDeviceNotFound() {
-        Toast.makeText(this, "Bluetooth device not found", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onBluetoothFailedEnabled() {
-        Toast.makeText(this, "Failed to turn on Bluetooth", Toast.LENGTH_SHORT).show();
-    }
 }

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
 //import android.support.v4.app.FragmentManager;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class ArduinoConnect {
 
     private BluetoothAdapter mBLAdapter;
     private ArduinoConnectCallback mCallback;
-    //private FragmentManager mFragmentManager;
+    private FragmentManager mFragmentManager;
     private Activity mContext;
 
     private BluetoothSocket mConnectedSocket = null;
@@ -118,15 +119,15 @@ public class ArduinoConnect {
         sleepTime = milliseconds;
     }
 
-    public ArduinoConnect(Activity activity){
+    public ArduinoConnect(Activity activity, FragmentManager fragmentManager){
         this.mContext = activity;
-        //this.mFragmentManager = fragmentManager;
+        this.mFragmentManager = fragmentManager;
         this.mCallback = null;
         init();
     }
-    public ArduinoConnect(Activity activity, ArduinoConnectCallback callback){
+    public ArduinoConnect(Activity activity, FragmentManager fragmentManager, ArduinoConnectCallback callback){
         this.mContext = activity;
-        //this.mFragmentManager = fragmentManager;
+        this.mFragmentManager = fragmentManager;
         this.mCallback = callback;
         init();
     }
@@ -170,8 +171,8 @@ public class ArduinoConnect {
 
     public void showDialog(){
         if(mBLAdapter.isEnabled()) {
-//            if (mDialog != null)
-//                mDialog.show(mFragmentManager, "DialogConnect");
+            if (mDialog != null)
+                mDialog.show(mFragmentManager, "DialogConnect");
         }else{
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             mContext.startActivityForResult(enableBtIntent, 0);
