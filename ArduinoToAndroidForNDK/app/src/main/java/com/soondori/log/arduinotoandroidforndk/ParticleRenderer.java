@@ -68,7 +68,6 @@ public class ParticleRenderer implements GLSurfaceView.Renderer
 
         //color buffer를 클리어할 때 사용할 색을 지정합니다.
         //red, green, blue, alpha 순으로 0~1사이의 값을 지정합니다.
-        //여기에서는 검은색으로 지정하고 있습니다.
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 }

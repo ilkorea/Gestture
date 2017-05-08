@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#ffffffff"
     tools:context="com.soondori.log.arduinotoandroidforndk.MainActivity"
     tools:showIn="@layout/activity_main">
 
@@ -18,7 +19,7 @@
 
     <TextView
         android:id="@+id/tvRxData"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="27dp"
         android:background="#dddddddd"
         android:gravity="center_vertical"
