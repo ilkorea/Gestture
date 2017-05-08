@@ -46,6 +46,8 @@ public class TexturedCubeRenderer implements GLSurfaceView.Renderer {
 
         // Really nice perspective calculations.
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
+
+        //gl.glViewport(0, 0, 1200, 2000);
     }
 
     float angleX, angleY;
@@ -74,6 +76,7 @@ public class TexturedCubeRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         // Sets the current view port to the new size.
         gl.glViewport(0, 0, width, height);
+        //gl.glViewport(0, 0, 200, 200);
 
         // Select the projection matrix
         gl.glMatrixMode(GL10.GL_PROJECTION);

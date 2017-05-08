@@ -56,7 +56,9 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
         Log.d(TAG, calculateArea(5.5f));
         LinearLayout l = (LinearLayout)rootView.findViewById(R.id.MyLinearLayout);
 
-        GLSurfaceView s = new GLSurfaceView(rootView.getContext());
+        GLSurfaceView s = new TouchGLSurfaceView(rootView.getContext());
+        //TouchGLSurfaceView tgls = new TouchGLSurfaceView(rootView.getContext());
+        //tgls.setRenderer(new TexturedCubeRenderer(rootView.getContext()));
         s.setRenderer(new TexturedCubeRenderer(rootView.getContext()));
         l.addView(s, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
