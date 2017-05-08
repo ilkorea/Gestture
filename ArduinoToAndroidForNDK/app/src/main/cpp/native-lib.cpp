@@ -4,7 +4,7 @@
 
 extern "C"{
     JNIEXPORT jstring JNICALL
-    Java_com_soondori_log_arduinotoandroidforndk_MainActivity_calculateArea( JNIEnv *jenv, jobject self, jdouble radius ) {
+    Java_com_soondori_log_arduinotoandroidforndk_MainFragment_calculateArea( JNIEnv *jenv, jobject self, jdouble radius ) {
         jdouble area = M_PI * radius * radius;
 
         char output[40];
