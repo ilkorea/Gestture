@@ -86,7 +86,7 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
 
         ivArrow = (ImageView)rootView.findViewById(R.id.ivArrow);
         tvRxData = (TextView)rootView.findViewById(R.id.tvRxData);
-//        tvRxData.setText(makeString());
+        tvRxData.setText(makeString());
 //        tvRxData.addTextChangedListener(new TextWatcher() {
 //            @Override
 //            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
