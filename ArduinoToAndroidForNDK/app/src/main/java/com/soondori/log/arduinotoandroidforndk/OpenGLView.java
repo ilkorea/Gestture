@@ -31,7 +31,7 @@ public class OpenGLView extends GLSurfaceView
         setEGLContextClientVersion(2);
 
         // Set the renderer
-        setRenderer(new ParticleRenderer(context));
+        setRenderer(new TexturedCubeRenderer(context));
     }
 
 }

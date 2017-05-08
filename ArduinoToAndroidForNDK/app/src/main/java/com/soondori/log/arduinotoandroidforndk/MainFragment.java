@@ -26,7 +26,7 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
     private final String TAG = "Soondori";
 
     private TextView tvRxData;
-    private ImageView ivArrow;
+    //private ImageView ivArrow;
     MainActivity root;
 
     static {
@@ -55,11 +55,12 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
         View rootView =  inflater.inflate(R.layout.fragment_main, container, false);
         Log.d(TAG, calculateArea(5.5f));
         LinearLayout l = (LinearLayout)rootView.findViewById(R.id.MyLinearLayout);
+
         GLSurfaceView s = new GLSurfaceView(rootView.getContext());
-        s.setRenderer(new ParticleRenderer(rootView.getContext()));
+        s.setRenderer(new TexturedCubeRenderer(rootView.getContext()));
         l.addView(s, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        ivArrow = (ImageView)rootView.findViewById(R.id.ivArrow);
+        //ivArrow = (ImageView)rootView.findViewById(R.id.ivArrow);
         tvRxData = (TextView)rootView.findViewById(R.id.tvRxData);
         tvRxData.setText(calculateArea(5.5f));
         tvRxData.addTextChangedListener(new TextWatcher() {
@@ -72,28 +73,28 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
                     String str = s.toString();
                     str = str.substring(0, str.indexOf("\r"));
 
-                    switch (str){
-                        case "Up":
-                            ivArrow.setBackgroundResource(R.drawable.up);
-                            break;
-                        case "Down":
-                            ivArrow.setBackgroundResource(R.drawable.down);
-                            break;
-                        case "Left":
-                            ivArrow.setBackgroundResource(R.drawable.left);
-                            break;
-                        case "Right":
-                            ivArrow.setBackgroundResource(R.drawable.right);
-                            break;
-                        case "Forward":
-                            ivArrow.setBackgroundResource(R.drawable.forward);
-                            break;
-                        case "Backward":
-                            ivArrow.setBackgroundResource(R.drawable.backward);
-                            break;
-                        default:
-                            break;
-                    }
+//                    switch (str){
+//                        case "Up":
+//                            ivArrow.setBackgroundResource(R.drawable.up);
+//                            break;
+//                        case "Down":
+//                            ivArrow.setBackgroundResource(R.drawable.down);
+//                            break;
+//                        case "Left":
+//                            ivArrow.setBackgroundResource(R.drawable.left);
+//                            break;
+//                        case "Right":
+//                            ivArrow.setBackgroundResource(R.drawable.right);
+//                            break;
+//                        case "Forward":
+//                            ivArrow.setBackgroundResource(R.drawable.forward);
+//                            break;
+//                        case "Backward":
+//                            ivArrow.setBackgroundResource(R.drawable.backward);
+//                            break;
+//                        default:
+//                            break;
+//                    }
                 }
             }
 

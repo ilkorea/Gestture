@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import id.kido1611.arduinoconnect.ArduinoConnect;
 
@@ -19,6 +21,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        // Remove the title bar from the window.
+//        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        // Make the windows into full screen mode.
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//
+//        // Create a OpenGL view.
+//        TouchGLSurfaceView view = new TouchGLSurfaceView(this);
+//
+//        // Creating and attaching the renderer.
+//        TexturedCubeRenderer renderer = new TexturedCubeRenderer(this);
+//        view.setRenderer(renderer);
+//        setContentView(view);
         setContentView(R.layout.activity_main);
 
         mArduinoConnect = new ArduinoConnect(this, getSupportFragmentManager());

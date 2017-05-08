@@ -25,10 +25,11 @@
         android:gravity="center_vertical"
         android:text="  Rx DATA" />
 
-    <com.soondori.log.arduinotoandroidforndk.OpenGLView
+    <com.soondori.log.arduinotoandroidforndk.TouchGLSurfaceView
         android:id="@+id/visualizer"
         android:layout_width="200dp"
         android:layout_height="200dp"/>
+
 
     <ImageView
         android:id="@+id/ivArrow"
