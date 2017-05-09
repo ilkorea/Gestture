@@ -15,13 +15,13 @@ public class TexturedCubeRenderer implements GLSurfaceView.Renderer {
 
     public TexturedCubeRenderer(Context context) {
         this.context = context;
-        Bitmap[]bitmap = new Bitmap[6];
-        bitmap[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.up);
-        bitmap[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.down);
-        bitmap[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.left);
-        bitmap[3] = BitmapFactory.decodeResource(context.getResources(), R.drawable.right);
-        bitmap[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.forward);
-        bitmap[5] = BitmapFactory.decodeResource(context.getResources(), R.drawable.backward);
+        Bitmap[] bitmap = new Bitmap[6];
+        bitmap[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.psj);
+        bitmap[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.hy_cycle);
+        bitmap[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.nougat);
+        bitmap[3] = BitmapFactory.decodeResource(context.getResources(), R.drawable.hy_text);
+        bitmap[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.sul);
+        bitmap[5] = BitmapFactory.decodeResource(context.getResources(), R.drawable.bluetooth);
         cube = new MultiTexturedCube(bitmap);
     }
 
@@ -50,7 +50,7 @@ public class TexturedCubeRenderer implements GLSurfaceView.Renderer {
         //gl.glViewport(0, 0, 1200, 2000);
     }
 
-    float angleX, angleY;
+    float angleX, angleY, angleZ;
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -62,18 +62,47 @@ public class TexturedCubeRenderer implements GLSurfaceView.Renderer {
 
         // Translates 4 units into the screen.
         gl.glTranslatef(0, 0, -10);
-        gl.glRotatef(20, 1, 0, 0); // 카메라를 향해 약간 기울여서 윗면이 보이도록 한다
-        gl.glRotatef(angleX, 1, 0, 0);
-        gl.glRotatef(angleY, 0, 1, 0);
+        gl.glRotatef(20, 1, 0, 0);      // X축 중심으로 이동  카메라를 향해 약간 기울여서 윗면이 보이도록 한다
+//        if(angleX > 0){
+//            gl.glRotatef(angleX, 1, 0, 0);  // X축 중심으로 이동
+//            cube.draw(gl);
+//            angleY = 0;
+//            angleZ = 0;
+//            return;
+//        }
+        if(angleY > 0){
+            gl.glRotatef(angleY, 0, 1, 0);  // Y축 중심으로 이동
+            cube.draw(gl);
+            angleX = 0;
+            angleZ = 0;
+            return;
+        }
+//        else if(angleZ > 0){
+//            gl.glRotatef(angleZ, 0, 0, 1);  // Z축 중심으로 이동
+//            cube.draw(gl);
+//            angleX = 0;
+//            angleY = 0;
+//            return;
+//        }
+        else{
+            cube.draw(gl);
+            return;
+        }
 
+        //TouchGLSurfaceView.iCubePosition = 0;       //0번 그림이 보이는 면
         // Draw our scene.
-        cube.draw(gl);
+
+
+        //cube.draw(gl);
 
         //angle += 5;
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+        TouchGLSurfaceView.iWindowHeight = height;
+        TouchGLSurfaceView.iWindowWidth = width;
+
         // Sets the current view port to the new size.
         gl.glViewport(0, 0, width, height);
         //gl.glViewport(0, 0, 200, 200);

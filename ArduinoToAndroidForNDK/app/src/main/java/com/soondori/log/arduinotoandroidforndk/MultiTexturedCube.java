@@ -173,6 +173,8 @@ public class MultiTexturedCube {
         for(int i=0; i<6; ++i)
         {
             gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIds[i]);   //use texture of ith face
+            gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
+            gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
             indexBuffer.position(6*i);                          //select ith face
             GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap[i], 0);
 
