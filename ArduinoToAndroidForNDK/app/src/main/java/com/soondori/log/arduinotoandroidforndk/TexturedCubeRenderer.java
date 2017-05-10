@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.util.Log;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -12,6 +13,11 @@ import javax.microedition.khronos.opengles.GL10;
 public class TexturedCubeRenderer implements GLSurfaceView.Renderer {
     private Context context;
     private MultiTexturedCube cube;
+
+    static {
+        System.loadLibrary("native-lib");
+    }
+    private native String saveBitmap(Bitmap bitmap);
 
     public TexturedCubeRenderer(Context context) {
         this.context = context;
@@ -22,6 +28,7 @@ public class TexturedCubeRenderer implements GLSurfaceView.Renderer {
         bitmap[3] = BitmapFactory.decodeResource(context.getResources(), R.drawable.hy_text);
         bitmap[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.sul);
         bitmap[5] = BitmapFactory.decodeResource(context.getResources(), R.drawable.bluetooth);
+        Log.d("Soondori","test");
         cube = new MultiTexturedCube(bitmap);
     }
 
@@ -46,8 +53,6 @@ public class TexturedCubeRenderer implements GLSurfaceView.Renderer {
 
         // Really nice perspective calculations.
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
-
-        //gl.glViewport(0, 0, 1200, 2000);
     }
 
     float angleX, angleY, angleZ;
@@ -56,45 +61,16 @@ public class TexturedCubeRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl) {
         // Clears the screen and depth buffer.
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-
         // Replace the current matrix with the identity matrix
         gl.glLoadIdentity();
-
         // Translates 4 units into the screen.
         gl.glTranslatef(0, 0, -10);
-        gl.glRotatef(20, 1, 0, 0);      // X축 중심으로 이동  카메라를 향해 약간 기울여서 윗면이 보이도록 한다
-//        if(angleX > 0){
-//            gl.glRotatef(angleX, 1, 0, 0);  // X축 중심으로 이동
-//            cube.draw(gl);
-//            angleY = 0;
-//            angleZ = 0;
-//            return;
-//        }
-        if(angleY > 0){
-            gl.glRotatef(angleY, 0, 1, 0);  // Y축 중심으로 이동
-            cube.draw(gl);
-            angleX = 0;
-            angleZ = 0;
-            return;
-        }
-//        else if(angleZ > 0){
-//            gl.glRotatef(angleZ, 0, 0, 1);  // Z축 중심으로 이동
-//            cube.draw(gl);
-//            angleX = 0;
-//            angleY = 0;
-//            return;
-//        }
-        else{
-            cube.draw(gl);
-            return;
-        }
-
-        //TouchGLSurfaceView.iCubePosition = 0;       //0번 그림이 보이는 면
+        //gl.glRotatef(20, 1, 0, 0); // 카메라를 향해 약간 기울여서 윗면이 보이도록 한다
+        gl.glRotatef(angleX, 1, 0, 0);
+        gl.glRotatef(angleY, 0, 1, 0);
+        gl.glRotatef(angleZ, 0, 0, 1);
         // Draw our scene.
-
-
-        //cube.draw(gl);
-
+        cube.draw(gl);
         //angle += 5;
     }
 

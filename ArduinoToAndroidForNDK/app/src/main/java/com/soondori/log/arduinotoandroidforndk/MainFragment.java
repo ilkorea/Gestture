@@ -22,6 +22,8 @@ import android.widget.TextView;
 import id.kido1611.arduinoconnect.ArduinoConnect;
 import id.kido1611.arduinoconnect.ArduinoConnectCallback;
 
+import static java.lang.Thread.sleep;
+
 public class MainFragment extends Fragment implements ArduinoConnectCallback {
     private final String TAG = "Soondori";
 
@@ -54,17 +56,18 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_main, container, false);
         Log.d(TAG, calculateArea(5.5f));
-        LinearLayout l = (LinearLayout)rootView.findViewById(R.id.MyLinearLayout);
+        LinearLayout linearLayout = (LinearLayout)rootView.findViewById(R.id.MyLinearLayout);
 
-        GLSurfaceView s = new TouchGLSurfaceView(rootView.getContext());
+        GLSurfaceView surfaceView = new TouchGLSurfaceView(rootView.getContext());
         //TouchGLSurfaceView tgls = new TouchGLSurfaceView(rootView.getContext());
         //tgls.setRenderer(new TexturedCubeRenderer(rootView.getContext()));
-        s.setRenderer(new TexturedCubeRenderer(rootView.getContext()));
-        l.addView(s, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        TexturedCubeRenderer texturedCubeRenderer = new TexturedCubeRenderer(rootView.getContext());
+        surfaceView.setRenderer(texturedCubeRenderer);
+        linearLayout.addView(surfaceView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //ivArrow = (ImageView)rootView.findViewById(R.id.ivArrow);
         tvRxData = (TextView)rootView.findViewById(R.id.tvRxData);
-        tvRxData.setText(calculateArea(5.5f));
+        //tvRxData.setText(calculateArea(5.5f));
         tvRxData.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -75,28 +78,70 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
                     String str = s.toString();
                     str = str.substring(0, str.indexOf("\r"));
 
-//                    switch (str){
-//                        case "Up":
-//                            ivArrow.setBackgroundResource(R.drawable.up);
-//                            break;
-//                        case "Down":
-//                            ivArrow.setBackgroundResource(R.drawable.down);
-//                            break;
-//                        case "Left":
-//                            ivArrow.setBackgroundResource(R.drawable.left);
-//                            break;
-//                        case "Right":
-//                            ivArrow.setBackgroundResource(R.drawable.right);
-//                            break;
-//                        case "Forward":
-//                            ivArrow.setBackgroundResource(R.drawable.forward);
-//                            break;
-//                        case "Backward":
-//                            ivArrow.setBackgroundResource(R.drawable.backward);
-//                            break;
-//                        default:
-//                            break;
-//                    }
+                    switch (str){
+                        case "Up":
+                            for(int i = 0; i < 90; i++) {
+                                texturedCubeRenderer.angleZ -= 1;
+                                try {
+                                    sleep(5);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            break;
+                        case "Down":
+                            for(int i = 0; i < 90; i++) {
+                                texturedCubeRenderer.angleZ += 1;
+                                try {
+                                    sleep(5);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            break;
+                        case "Left":
+                            for(int i = 0; i < 90; i++) {
+                                texturedCubeRenderer.angleY -= 1;
+                                try {
+                                    sleep(5);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            break;
+                        case "Right":
+                            for(int i = 0; i < 90; i++) {
+                                texturedCubeRenderer.angleY += 1;
+                                try {
+                                    sleep(5);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            break;
+                        case "Forward":
+                            for(int i = 0; i < 90; i++){
+                                texturedCubeRenderer.angleX -= 1;
+                                try {
+                                    sleep(5);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            break;
+                        case "Backward":
+                            for(int i = 0; i < 90; i++) {
+                                texturedCubeRenderer.angleX += 1;
+                                try {
+                                    sleep(5);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
