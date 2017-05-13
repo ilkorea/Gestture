@@ -4,23 +4,19 @@ import android.bluetooth.BluetoothDevice;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import id.kido1611.arduinoconnect.ArduinoConnect;
 import id.kido1611.arduinoconnect.ArduinoConnectCallback;
+import id.kido1611.arduinoconnect.DialogConnect;
 
 import static java.lang.Thread.sleep;
 
@@ -28,6 +24,7 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
     private final String TAG = "Soondori";
 
     private TextView tvRxData;
+    public volatile TextView tvBtId;
     //private ImageView ivArrow;
     MainActivity root;
 
@@ -65,6 +62,7 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
         surfaceView.setRenderer(texturedCubeRenderer);
         linearLayout.addView(surfaceView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
+        tvBtId = (TextView)rootView.findViewById(R.id.tvBtId);
         //ivArrow = (ImageView)rootView.findViewById(R.id.ivArrow);
         tvRxData = (TextView)rootView.findViewById(R.id.tvRxData);
         //tvRxData.setText(calculateArea(5.5f));
@@ -80,24 +78,10 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
 
                     switch (str){
                         case "Up":
-                            for(int i = 0; i < 90; i++) {
-                                texturedCubeRenderer.angleZ -= 1;
-                                try {
-                                    sleep(5);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            texturedCubeRenderer.depth += 0.2;
                             break;
                         case "Down":
-                            for(int i = 0; i < 90; i++) {
-                                texturedCubeRenderer.angleZ += 1;
-                                try {
-                                    sleep(5);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            texturedCubeRenderer.depth -= 0.2;
                             break;
                         case "Left":
                             for(int i = 0; i < 90; i++) {
@@ -154,13 +138,13 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
 
     @Override
     public void onSerialTextReceived(String text) {
-        String str;
-        //str = tvRxData.getText().toString();
         tvRxData.setText(text);
     }
 
     @Override
     public void onArduinoConnected(BluetoothDevice device) {
+        tvBtId.setText("Bluetooth is connect with " + DialogConnect.strBtName);
+        ((MainActivity)getActivity()).SetFabConnectedImage(true);
         if(getArduinoConnect()!=null){
             getArduinoConnect().sendMessage("Connected..");
         }
@@ -170,6 +154,8 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
 
     @Override
     public void onArduinoDisconnected() {
+        ((MainActivity)getActivity()).SetFabConnectedImage(false);
+        tvBtId.setText("Bluetooth is disconnected");
         if(getArduinoConnect()!=null){
             //Toast.makeText(this, "Disconnected", Toast.LENGTH_SHORT).show();
             //((MainActivity)getActivity()).hideFAB(View.VISIBLE);
@@ -178,21 +164,29 @@ public class MainFragment extends Fragment implements ArduinoConnectCallback {
 
     @Override
     public void onArduinoNotConnected() {
+        ((MainActivity)getActivity()).SetFabConnectedImage(false);
+        tvBtId.setText("Bluetooth is disconnected");
         // Toast.makeText(this, "Not Connected", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onArduinoConnectFailed() {
+        ((MainActivity)getActivity()).SetFabConnectedImage(false);
+        tvBtId.setText("Bluetooth is disconnected");
         // Toast.makeText(this, "Failed to connect", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onBluetoothDeviceNotFound() {
+        ((MainActivity)getActivity()).SetFabConnectedImage(false);
+        tvBtId.setText("Bluetooth is disconnected");
         // Toast.makeText(this, "Bluetooth device not found", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onBluetoothFailedEnabled() {
+        ((MainActivity)getActivity()).SetFabConnectedImage(false);
+        tvBtId.setText("Bluetooth is disconnected");
         //Toast.makeText(this, "Failed to turn on Bluetooth", Toast.LENGTH_SHORT).show();
     }
 }

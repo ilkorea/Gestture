@@ -14,6 +14,7 @@ import id.kido1611.arduinoconnect.ArduinoConnect;
 public class MainActivity extends AppCompatActivity {
     private ArduinoConnect mArduinoConnect;
     FloatingActionButton fab;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,14 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mArduinoConnect.showDialog();
+                if(!mArduinoConnect.isConnected())
+                    mArduinoConnect.showDialog();
+                else
+                    mArduinoConnect.disconnected();
             }
         });
 
+        //intent = new Intent(HelpActivity.this, HelpActivity.class);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new MainFragment()).commit();
     }
 
@@ -55,10 +60,18 @@ public class MainActivity extends AppCompatActivity {
         return mArduinoConnect;
     }
 
+    public void SetFabConnectedImage(boolean connect){
+        if(connect)
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_bluetooth_connected_white_24dp));
+        else
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_bluetooth_disabled_white_24dp));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -67,8 +80,9 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
+       // startActivity(intent);
+        //item.setIntent(intent);
 //        if (id == R.id.action_disconnected) {
 //            if(getArduinoConnect()!=null){
 //                if(getArduinoConnect().isConnected()){

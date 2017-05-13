@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">ArduinoToAndroidForNDK</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="action_settings">string</string>
+    <string name="title_activity_main">Arduino To Android For OpenGL ES</string>
+    <string name="action_settings">Help</string>
 </resources>

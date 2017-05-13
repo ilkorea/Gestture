@@ -7,26 +7,32 @@
     android:orientation="vertical"
     android:background="#ffffffff"
     tools:context="com.soondori.log.arduinotoandroidforndk.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/tvBtId"
-        android:layout_width="100dp"
-        android:layout_height="27dp"
+        android:layout_marginLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="bottom"
         android:text="Bluetooth ID"
-        android:textSize="10sp"/>
+        android:layout_marginTop="20dp"
+        android:textSize="10sp"
+        android:layout_weight="0.03" />
 
     <TextView
         android:id="@+id/tvRxData"
         android:layout_width="match_parent"
         android:layout_height="27dp"
         android:background="#dddddddd"
-        android:gravity="center_vertical"
+        android:gravity="center"
+        android:textSize="20sp"
         android:text="  Rx DATA" />
 
     <com.soondori.log.arduinotoandroidforndk.TouchGLSurfaceView
         android:id="@+id/visualizer"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
+
 </LinearLayout>

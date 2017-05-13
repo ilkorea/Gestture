@@ -19,6 +19,8 @@ public class TouchGLSurfaceView extends GLSurfaceView {
     float fSaveAngleX;
     float fSaveAngleY;
 
+    private float mPreviousX;
+    private float mPreviousY;
 
     public TouchGLSurfaceView(Context context) {
         super(context, null);
@@ -42,6 +44,7 @@ public class TouchGLSurfaceView extends GLSurfaceView {
     float Xvalue, Yvalue, Zvalue;
     boolean boEventFlag = false;
     boolean boTakeoffFlag = true;
+    private float mDensity;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -74,7 +77,32 @@ public class TouchGLSurfaceView extends GLSurfaceView {
 //				this.renderer.angleX=(angleX-=2);
 //			}*/
 //        }
-        return true;
+        if (event != null)
+        {
+            float x = event.getX();
+            float y = event.getY();
+
+            if (event.getAction() == MotionEvent.ACTION_MOVE)
+            {
+                if (renderer != null)
+                {
+                    float deltaX = (x - mPreviousX) / mDensity / 2f;
+                    float deltaY = (y - mPreviousY) / mDensity / 2f;
+
+                    renderer.mDeltaX += deltaX;
+                    renderer.mDeltaY += deltaY;
+                }
+            }
+
+            mPreviousX = x;
+            mPreviousY = y;
+
+            return true;
+        }
+        else
+        {
+            return super.onTouchEvent(event);
+        }
     }
 
     @Override

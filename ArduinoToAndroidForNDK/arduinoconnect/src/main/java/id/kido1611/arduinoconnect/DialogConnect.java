@@ -32,6 +32,8 @@ import id.kido1611.arduinoconnect.widget.CircularProgressView;
  */
 public class DialogConnect extends DialogFragment {
 
+    public static String strBtName;
+
     public DialogConnect(){
 
     }
@@ -135,6 +137,7 @@ public class DialogConnect extends DialogFragment {
     }
 
     private void connectArduino(BluetoothDevice mDevice){
+        strBtName = mDevice.getName();
         mProgressDialog.setMessage("Connecting to "+mDevice.getName());
         mProgressDialog.show();
         ConnectArduino mConnArduino = new ConnectArduino(mDevice, new BluetoothDeviceCallback() {
